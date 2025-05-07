@@ -12,16 +12,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    // Primary color for app
+    primary = PrimaryColor1,
+    secondary = PrimaryColor2,
+    // All screens background color
+    background = BackgroundColor,
+
+    // For Text Colors
+    onPrimary = TextColor1,
+    onSecondary = TextColor2,
+
+    // For splash screen background
+    tertiaryContainer = SplashBackgroundColor
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    // Primary color for app
+    primary = PrimaryColor1,
+    secondary = PrimaryColor1,
+    // All screens background color
+    background = BackgroundColor,
 
+    // For Text Colors
+    onPrimary = TextColor1,
+    onSecondary = TextColor2,
+
+    // For splash screen background
+    tertiaryContainer = SplashBackgroundColor,
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
