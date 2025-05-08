@@ -12,7 +12,11 @@ import androidx.compose.ui.Modifier
 import com.example.ultimate.presentation.auth.LoginScreenViewModel
 import com.example.ultimate.presentation.navigation.AppNavigation
 import com.example.ultimate.ui.theme.UltimateTheme
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
+
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val loginViewModel by viewModels<LoginScreenViewModel>()
 

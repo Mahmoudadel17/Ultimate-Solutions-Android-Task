@@ -9,10 +9,16 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.example.ultimate.domain.repository.AuthRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import javax.inject.Inject
 
 
-class LoginScreenViewModel : ViewModel() {
+@HiltViewModel
+class LoginScreenViewModel @Inject constructor(
+    repo:AuthRepository
+): ViewModel() {
     private var _state by mutableStateOf(LoginScreenState())
 
     val state: State<LoginScreenState>
