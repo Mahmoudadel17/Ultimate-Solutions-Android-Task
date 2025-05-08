@@ -1,6 +1,11 @@
 package com.example.ultimate.data.remote.dto.deliveryBills
 
+import androidx.compose.ui.graphics.Color
 import com.example.ultimate.data.remote.dto.OperationResult
+import com.example.ultimate.ui.theme.p1
+import com.example.ultimate.ui.theme.p2
+import com.example.ultimate.ui.theme.p3
+import com.example.ultimate.ui.theme.p4
 import com.google.gson.annotations.SerializedName
 
 data class DeliveryBillsResponse(
@@ -9,6 +14,8 @@ data class DeliveryBillsResponse(
     @SerializedName("Result")
     val result: OperationResult // Reusing from previous models
 )
+
+
 
 data class DeliveryBillsData(
     @SerializedName("DeliveryBills")
@@ -67,4 +74,15 @@ data class DeliveryBill(
         get() = (billAmount.toDoubleOrNull() ?: 0.0) +
                 (taxAmount.toDoubleOrNull() ?: 0.0) +
                 (deliveryAmount.toDoubleOrNull() ?: 0.0)
+}
+
+
+fun DeliveryBill.getStatusColor(): Color {
+    return when (deliveryStatusFlag) {
+        "0" -> p1 // Amber for pending
+        "1" -> p2 // Green for delivered
+        "2" -> p3// Yellow for partial return
+        "3" -> p4 // Red for full return
+        else -> Color.Gray
+    }
 }

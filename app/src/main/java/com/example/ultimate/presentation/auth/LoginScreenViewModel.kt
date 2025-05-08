@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginScreenViewModel @Inject constructor(
-    repo:AuthRepository
+    private  val repo:AuthRepository
 ): ViewModel() {
     private var _state by mutableStateOf(LoginScreenState())
 
