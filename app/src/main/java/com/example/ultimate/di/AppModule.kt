@@ -4,6 +4,8 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.ultimate.data.local.AppDatabase
+import com.example.ultimate.data.local.dao.DeliveryBillDao
+import com.example.ultimate.data.local.dao.StatusTypeDao
 import com.example.ultimate.data.remote.ApiServices
 import com.example.ultimate.data.repository.AuthRepositoryImpl
 import com.example.ultimate.data.repository.DeliveryBillsRepositoryImpl
@@ -49,23 +51,28 @@ object AppModule {
         .baseUrl(Constants.API_SERVICES_URL_BASE)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+
     @Provides
     @Singleton
-    fun providesGeneralApiServices () : ApiServices = providesGeneralRetrofit().create(ApiServices::class.java)
-
+    fun providesGeneralApiServices(retrofit: Retrofit): ApiServices =
+        retrofit.create(ApiServices::class.java)
 
     // Auth repository
     @Provides
     @Singleton
-    fun providesAuthApiRepository(): AuthRepository = AuthRepositoryImpl(providesGeneralApiServices())
-
-
+    fun providesAuthApiRepository(apiServices: ApiServices): AuthRepository =
+        AuthRepositoryImpl(apiServices)
 
     // Delivery Bills Repository
     @Provides
     @Singleton
-    fun providesGeneralApiRepository(): DeliveryBillsRepository = DeliveryBillsRepositoryImpl(providesGeneralApiServices())
-
+    fun providesGeneralApiRepository(
+        apiServices: ApiServices,
+        deliveryBillDao: DeliveryBillDao,
+        statusTypeDao: StatusTypeDao
+    ): DeliveryBillsRepository =
+        DeliveryBillsRepositoryImpl(apiServices, deliveryBillDao, statusTypeDao)
 
 
     @Singleton
