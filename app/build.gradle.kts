@@ -120,4 +120,6 @@ dependencies {
     implementation(libs.room.ktx)  // For Kotlin extensions and Coroutine support
     kapt(libs.room.compiler)      // Annotation processor
 
+    implementation(libs.kotlinx.dateTime)
+
 }

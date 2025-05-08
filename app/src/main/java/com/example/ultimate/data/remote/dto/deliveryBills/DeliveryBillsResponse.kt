@@ -7,6 +7,12 @@ import com.example.ultimate.ui.theme.p2
 import com.example.ultimate.ui.theme.p3
 import com.example.ultimate.ui.theme.p4
 import com.google.gson.annotations.SerializedName
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.format
+import kotlinx.datetime.format.DateTimeFormat
+import java.time.format.DateTimeFormatter
+import java.util.Locale
+
 
 data class DeliveryBillsResponse(
     @SerializedName("Data")
@@ -74,6 +80,9 @@ data class DeliveryBill(
         get() = (billAmount.toDoubleOrNull() ?: 0.0) +
                 (taxAmount.toDoubleOrNull() ?: 0.0) +
                 (deliveryAmount.toDoubleOrNull() ?: 0.0)
+
+
+
 }
 
 
@@ -85,4 +94,11 @@ fun DeliveryBill.getStatusColor(): Color {
         "3" -> p4 // Red for full return
         else -> Color.Gray
     }
+}
+
+
+fun DeliveryBill.isToday(): Boolean {
+    val currentDate = java.text.SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        .format(java.util.Date())
+    return billDate == currentDate
 }

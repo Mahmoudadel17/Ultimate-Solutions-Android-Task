@@ -26,6 +26,7 @@ fun AppNavigation(loginViewModel: LoginScreenViewModel) {
         composable(route = Screens.Home.route) {
             // Home screen
             val viewModel : HomeViewModel = hiltViewModel()
+            // viewModel.refresh()
             HomeScreen(viewModel = viewModel)
         }
         composable(

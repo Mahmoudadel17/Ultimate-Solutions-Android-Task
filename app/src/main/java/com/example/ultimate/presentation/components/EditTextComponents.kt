@@ -68,7 +68,7 @@ fun PasswordEditText(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ){
-                    Text(text = stringResource(R.string.password), fontSize = 16.sp,color = MaterialTheme.colorScheme.secondary)
+                    Text(text = stringResource(R.string.password), fontSize = 16.sp,color = MaterialTheme.colorScheme.onSecondary)
                 }
 
                 },
@@ -106,7 +106,7 @@ fun UserIDEditText(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.Center
                 ){
-                    Text(text = stringResource(R.string.user_id), fontSize = 16.sp,color = MaterialTheme.colorScheme.secondary)
+                    Text(text = stringResource(R.string.user_id), fontSize = 16.sp,color = MaterialTheme.colorScheme.onSecondary)
 
                 } },
             value = userId,

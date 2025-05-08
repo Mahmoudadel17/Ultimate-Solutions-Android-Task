@@ -32,7 +32,7 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     // Primary color for app
     primary = PrimaryColor1,
-    secondary = PrimaryColor1,
+    secondary = PrimaryColor2,
     // All screens background color
     background = BackgroundColor,
 

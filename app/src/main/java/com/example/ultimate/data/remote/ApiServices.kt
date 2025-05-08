@@ -22,7 +22,7 @@ interface ApiServices {
     ): StatusTypesResponse
 
 
-    @POST("GetDeliveryBills")
+    @POST("GetDeliveryBillsItems")
     suspend fun getDeliveryBills(
         @Body request: DeliveryBillsRequest
     ): DeliveryBillsResponse

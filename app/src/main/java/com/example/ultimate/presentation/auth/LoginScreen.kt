@@ -45,15 +45,6 @@ import androidx.compose.animation.fadeOut
 import com.example.ultimate.presentation.components.PasswordEditText
 import com.example.ultimate.presentation.components.UserIDEditText
 
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview() {
-    val navController = rememberNavController()
-    LoginScreen(
-        viewModel = LoginScreenViewModel(),
-        navController = navController
-    )
-}
 
 @Composable
 fun LoginScreen(
@@ -68,7 +59,6 @@ fun LoginScreen(
             .fillMaxSize()
             .background(Color.White)
     ) {
-
         Row (
             modifier = Modifier
                 .fillMaxWidth()

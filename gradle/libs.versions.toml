@@ -11,7 +11,7 @@ composeBom = "2024.04.01"
 hiltAndroid = "2.51.1"
 hiltNavigationCompose = "1.2.0"
 room = "2.6.1"  # Latest stable version as of June 2024
-
+dateTime = "0.6.0"
 
 
 #new
@@ -88,6 +88,10 @@ room-paging = { group = "androidx.room", name = "room-paging", version.ref = "ro
 # coroutines
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
+
+#datetime
+kotlinx-dateTime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "dateTime" }
+
 
 # systemuicontroller
 accompanist-systemuicontroller  = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }

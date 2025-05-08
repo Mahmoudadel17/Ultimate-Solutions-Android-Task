@@ -18,25 +18,33 @@ import com.example.ultimate.data.remote.dto.status.StatusTypesRequest
 import com.example.ultimate.data.remote.dto.status.StatusTypesResponse
 import com.example.ultimate.domain.repository.DeliveryBillsRepository
 import javax.inject.Inject
+import android.util.Log
 
-class DeliveryBillsRepositoryImpl  @Inject constructor(
+class DeliveryBillsRepositoryImpl @Inject constructor(
     private val api: ApiServices,
     private val deliveryBillDao: DeliveryBillDao,
     private val statuesTypeDao: StatusTypeDao
-
-
 ) : DeliveryBillsRepository {
 
+    private companion object {
+        const val TAG = "DeliveryRepo"
+    }
+
     override suspend fun getStatusTypes(languageNo: String): StatusTypesResponse {
+        Log.d(TAG, "getStatusTypes() called with languageNo: $languageNo")
+
         return try {
+            Log.d(TAG, "Attempting to fetch status types from API")
             val apiResponse = api.getStatusTypes(
                 StatusTypesRequest(
                     StatusTypesQuery(languageNo = languageNo)
                 )
             )
 
+            Log.d(TAG, "API response received: ${apiResponse.result?.errorNumber} - ${apiResponse.result?.errorMessage}")
+
             if (apiResponse.result?.errorNumber == 0) {
-                // API success - save to DB
+                Log.d(TAG, "API success - processing status types")
                 apiResponse.data?.statusTypes?.let { types ->
                     val entities = types.map { type ->
                         StatusTypeEntity(
@@ -45,13 +53,18 @@ class DeliveryBillsRepositoryImpl  @Inject constructor(
                             languageNo = languageNo
                         )
                     }
+                    Log.d(TAG, "Clearing old status types for language: $languageNo")
                     statuesTypeDao.clearStatusTypes(languageNo)
+
+                    Log.d(TAG, "Inserting ${entities.size} status types into DB")
                     statuesTypeDao.insertStatusTypes(entities)
                 }
                 apiResponse
             } else {
-                // API error - fallback to DB
+                Log.w(TAG, "API error - falling back to DB cache. Error: ${apiResponse.result?.errorMessage}")
                 val cachedTypes = statuesTypeDao.getStatusTypes(languageNo)
+                Log.d(TAG, "Found ${cachedTypes.size} cached status types")
+
                 StatusTypesResponse(
                     StatusTypesData(
                         statusTypes = cachedTypes.map {
@@ -68,8 +81,10 @@ class DeliveryBillsRepositoryImpl  @Inject constructor(
                 )
             }
         } catch (e: Exception) {
-            // Network failure - fallback to DB
+            Log.e(TAG, "Network failure - falling back to DB cache", e)
             val cachedTypes = statuesTypeDao.getStatusTypes(languageNo)
+            Log.d(TAG, "Found ${cachedTypes.size} cached status types")
+
             StatusTypesResponse(
                 StatusTypesData(
                     statusTypes = cachedTypes.map {
@@ -93,8 +108,10 @@ class DeliveryBillsRepositoryImpl  @Inject constructor(
         billSerial: String,
         processedFlag: String
     ): DeliveryBillsResponse {
+        Log.d(TAG, "getDeliveryBills() called with deliveryNo: $deliveryNo, languageNo: $languageNo")
+
         return try {
-            // First try to get from API
+            Log.d(TAG, "Attempting to fetch delivery bills from API")
             val apiResponse = api.getDeliveryBills(
                 DeliveryBillsRequest(
                     DeliveryBillsQuery(
@@ -106,8 +123,10 @@ class DeliveryBillsRepositoryImpl  @Inject constructor(
                 )
             )
 
+            Log.d(TAG, "API response received: ${apiResponse.result?.errorNumber} - ${apiResponse.result?.errorMessage}")
+
             if (apiResponse.result?.errorNumber == 0) {
-                // API success - save to DB
+                Log.d(TAG, "API success - processing delivery bills")
                 apiResponse.data?.bills?.let { bills ->
                     val entities = bills.map { bill ->
                         DeliveryBillEntity(
@@ -132,13 +151,18 @@ class DeliveryBillsRepositoryImpl  @Inject constructor(
                             deliveryStatusFlag = bill.deliveryStatusFlag ?: ""
                         )
                     }
+                    Log.d(TAG, "Clearing old bills for language: $languageNo")
                     deliveryBillDao.clearBills(languageNo)
+
+                    Log.d(TAG, "Inserting ${entities.size} bills into DB")
                     deliveryBillDao.insertBills(entities)
                 }
                 apiResponse
             } else {
-                // API returned error - fallback to DB
+                Log.w(TAG, "API error - falling back to DB cache. Error: ${apiResponse.result?.errorMessage}")
                 val cachedBills = deliveryBillDao.getBills(languageNo)
+                Log.d(TAG, "Found ${cachedBills.size} cached bills")
+
                 DeliveryBillsResponse(
                     DeliveryBillsData(
                         bills = cachedBills.map {
@@ -165,14 +189,16 @@ class DeliveryBillsRepositoryImpl  @Inject constructor(
                         }
                     ),
                     OperationResult(
-                        errorNumber = 0, // Custom code for cached data, but we will make it as 0 now to can display it on UI.
+                        errorNumber = 0,
                         errorMessage = "Falling back to cached data: ${apiResponse.result?.errorMessage}"
                     )
                 )
             }
         } catch (e: Exception) {
-            // Network failure - fallback to DB
+            Log.e(TAG, "Network failure - falling back to DB cache", e)
             val cachedBills = deliveryBillDao.getBills(languageNo)
+            Log.d(TAG, "Found ${cachedBills.size} cached bills")
+
             DeliveryBillsResponse(
                 DeliveryBillsData(
                     bills = cachedBills.map {
@@ -199,12 +225,10 @@ class DeliveryBillsRepositoryImpl  @Inject constructor(
                     }
                 ),
                 OperationResult(
-                    errorNumber = 0, // Custom code for network failure, but we will make it as 0 now to can display it on UI.
+                    errorNumber = 0,
                     errorMessage = "Network error, falling back to cached data: ${e.message}"
                 )
             )
         }
     }
-
-
 }
