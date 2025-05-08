@@ -23,7 +23,10 @@ private val DarkColorScheme = darkColorScheme(
     onSecondary = TextColor2,
 
     // For splash screen background
-    tertiaryContainer = SplashBackgroundColor
+    tertiaryContainer = SplashBackgroundColor,
+
+    // For ContainerColor
+    primaryContainer = ContainerColor
 )
 
 private val LightColorScheme = lightColorScheme(
@@ -39,6 +42,12 @@ private val LightColorScheme = lightColorScheme(
 
     // For splash screen background
     tertiaryContainer = SplashBackgroundColor,
+
+
+    // For ContainerColor
+    primaryContainer = ContainerColor
+
+
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
@@ -54,7 +63,7 @@ private val LightColorScheme = lightColorScheme(
 fun UltimateTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
