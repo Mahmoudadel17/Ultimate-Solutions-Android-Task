@@ -2,4 +2,7 @@
     <string name="app_name">Ultimate</string>
     <string name="password">Password</string>
     <string name="user_id">User ID</string>
+    <string name="arabic">العربية</string>
+    <string name="english">English</string>
+    <string name="apply">Apply</string>
 </resources>
