@@ -113,4 +113,11 @@ dependencies {
     implementation (libs.androidx.material3.window.size)
 
     implementation(libs.androidx.constraintlayout.compose)
+
+
+    // Room Database
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)  // For Kotlin extensions and Coroutine support
+    kapt(libs.room.compiler)      // Annotation processor
+
 }

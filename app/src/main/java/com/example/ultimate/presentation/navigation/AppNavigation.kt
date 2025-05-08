@@ -1,12 +1,14 @@
 package com.example.ultimate.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.ultimate.presentation.auth.LoginScreen
 import com.example.ultimate.presentation.auth.LoginScreenViewModel
 import com.example.ultimate.presentation.home.HomeScreen
+import com.example.ultimate.presentation.home.HomeViewModel
 import com.example.ultimate.presentation.splash.SplashScreen
 
 
@@ -23,7 +25,8 @@ fun AppNavigation(loginViewModel: LoginScreenViewModel) {
         }
         composable(route = Screens.Home.route) {
             // Home screen
-            HomeScreen()
+            val viewModel : HomeViewModel = hiltViewModel()
+            HomeScreen(viewModel = viewModel)
         }
         composable(
             route = Screens.Login.route,

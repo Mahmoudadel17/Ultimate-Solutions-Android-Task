@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ultimate.data.remote.dto.deliveryBills.DeliveryBill
 import com.example.ultimate.data.remote.dto.deliveryBills.DeliveryBillsResponse
+import com.example.ultimate.data.remote.dto.deliveryBills.getStatusColor
 import com.example.ultimate.data.remote.dto.status.StatusTypesResponse
 import com.example.ultimate.domain.repository.DeliveryBillsRepository
 import com.example.ultimate.utils.Constants
@@ -31,6 +32,16 @@ class  HomeViewModel  @Inject constructor(
     init {
         val language = pref.getSharedPreferences(Constants.LANG,"1")
         loadStatusTypes(language)
+        loadBills(
+            deliveryNo = getDeliveryName(),
+            languageNo =  pref.getSharedPreferences(Constants.LANG,"")
+
+        )
+
+    }
+
+    fun getDeliveryName():String{
+        return  pref.getSharedPreferences(Constants.DELIVERY_NAME,"")
     }
 
     private fun loadStatusTypes(languageNo: String = "1") {
@@ -48,7 +59,7 @@ class  HomeViewModel  @Inject constructor(
 
 
 
-    fun loadBills(
+    private fun loadBills(
         deliveryNo: String,
         languageNo: String = "1",
         billSerial: String = "",

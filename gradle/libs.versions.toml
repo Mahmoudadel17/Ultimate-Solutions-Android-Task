@@ -10,6 +10,8 @@ activityCompose = "1.9.3"
 composeBom = "2024.04.01"
 hiltAndroid = "2.51.1"
 hiltNavigationCompose = "1.2.0"
+room = "2.6.1"  # Latest stable version as of June 2024
+
 
 
 #new
@@ -70,6 +72,13 @@ coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilVersion"
 
 #icons
 androidx-icons = {module = "androidx.compose.material:material-icons-extended", version.ref = "iconsVersion"}
+
+
+# Room components
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" } # Optional for paging
 
 
 # diggar hitl
