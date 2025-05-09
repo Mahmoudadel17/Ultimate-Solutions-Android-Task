@@ -5,6 +5,10 @@
     <string name="arabic">Arabic</string>
     <string name="english">English</string>
     <string name="apply">Apply</string>
-    <string name="new_tab">New</string>
+    <string name="new_tab">  New   </string>
     <string name="others_tab">Others</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="log_back_into_your_account">Log back into your account</string>
+    <string name="show_more">Show More</string>
+    <string name="log_in">Log in</string>
 </resources>

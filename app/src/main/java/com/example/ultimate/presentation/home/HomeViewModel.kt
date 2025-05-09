@@ -60,8 +60,17 @@ init {
     }
 
 
-    fun getDeliveryName():String{
-        return  pref.getSharedPreferences(Constants.DELIVERY_NAME,"")
+    fun getDeliveryNames(): Pair<String, String> {
+        val fullName = pref.getSharedPreferences(Constants.DELIVERY_NAME, "").trim()
+        val names = fullName.split("\\s+".toRegex())
+            .filter { it.isNotBlank() }
+            .take(2)
+
+        return when {
+            names.size >= 2 -> Pair(names[0], names[1])
+            names.size == 1 -> Pair(names[0], "")
+            else -> Pair("", "")
+        }
     }
 
     private fun loadStatusTypes(languageNo: String = "1") {
@@ -109,11 +118,18 @@ init {
     fun getFilteredBills(): List<DeliveryBill> {
         return when (val state = billsState.value) {
             is BillsState.Success -> {
+                // if we filter based on the flag 0 for new, another for others tab
                 if (selectedTab.value == 0) {
-                    state.bills.filter { it.isToday() }
+                    state.bills.filter { it.deliveryStatusFlag == "0" }
                 } else {
-                    state.bills.filterNot { it.isToday() }
+                    state.bills.filterNot { it.deliveryStatusFlag == "0" }
                 }
+                // if we want to filter by date
+//                if (selectedTab.value == 0) {
+//                    state.bills.filter { it.isToday() }
+//                } else {
+//                    state.bills.filterNot { it.isToday() }
+//                }
             }
             else -> emptyList()
         }

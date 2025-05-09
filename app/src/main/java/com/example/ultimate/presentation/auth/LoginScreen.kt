@@ -42,8 +42,11 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.ui.res.stringResource
 import com.example.ultimate.presentation.components.PasswordEditText
 import com.example.ultimate.presentation.components.UserIDEditText
+import com.example.ultimate.presentation.components.language.LanguagePickerIcon
+import com.example.ultimate.presentation.navigation.Screens
 
 
 @Composable
@@ -51,7 +54,6 @@ fun LoginScreen(
     viewModel: LoginScreenViewModel ,
     navController: NavController
 ) {
-    val context = LocalContext.current
     val state = viewModel.state.value
 
     Box(
@@ -86,19 +88,30 @@ fun LoginScreen(
                        // .align(alignment = Alignment.End)
                 )
             }
-             Spacer(modifier = Modifier.weight(1f))
 
+            Spacer(modifier = Modifier.weight(1f))
 
-            // Background elements
-            Image(
-                painter = painterResource(id = R.drawable.ic_circle), // Add delivery.svg to your drawables
-                contentDescription = "Background decoration",
-                modifier = Modifier
-                    .align(Alignment.Top)
-                    .size(200.dp, 190.dp)
-                    .padding(start = 20.dp)
+            Box{
+                // Background elements
+                Image(
+                    painter = painterResource(id = R.drawable.ic_circle), // Add delivery.svg to your drawables
+                    contentDescription = "Background decoration",
+                    modifier = Modifier
+                        //.align(Alignment.Top)
+                        .size(200.dp, 190.dp)
+                        .padding(start = 20.dp)
 
-            )
+                )
+                LanguagePickerIcon(
+                    modifier = Modifier
+                        .size(150.dp)
+                        .padding(top = 70.dp, start = 60.dp)
+                        .padding(start = 56.dp)
+
+                )
+
+            }
+
 
         }
 
@@ -119,7 +132,7 @@ fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 Text(
-                    text = "Welcome Back!",
+                    text = stringResource(R.string.welcome_back),
                     style = MaterialTheme.typography.headlineLarge.copy(
                         fontWeight = FontWeight.Bold,
                         fontSize = 28.sp,
@@ -129,7 +142,7 @@ fun LoginScreen(
                 )
 
                 Text(
-                    text = "Log back into your account",
+                    text = stringResource(R.string.log_back_into_your_account),
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontSize = 16.sp,
                         color = MaterialTheme.colorScheme.primary
@@ -139,17 +152,6 @@ fun LoginScreen(
                 )
 
             }
-//            // User ID Field
-//            OutlinedTextField(
-//                value = state.userId,
-//                onValueChange = { viewModel.onUserIdChange(it) },
-//                label = { Text("User ID") },
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(bottom = 16.dp),
-//                shape = RoundedCornerShape(24.dp)
-//            )
-
             UserIDEditText(
                 userId = state.userId,
                 modifier = Modifier
@@ -165,17 +167,6 @@ fun LoginScreen(
                     .padding(bottom = 16.dp),
             ) { viewModel.onPasswordChange(it) }
 
-//            // Password Field
-//            OutlinedTextField(
-//                value = state.password,
-//                onValueChange = { viewModel.onPasswordChange(it) },
-//                label = { Text("Password") },
-//                visualTransformation = PasswordVisualTransformation(),
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(bottom = 8.dp),
-//                shape = RoundedCornerShape(24.dp)
-//            )
 
             // Show More option
             TextButton(
@@ -183,7 +174,7 @@ fun LoginScreen(
                 modifier = Modifier.align(Alignment.End)
             ) {
                 Text(
-                    text = "Show More",
+                    text = stringResource(R.string.show_more),
                     color = MaterialTheme.colorScheme.primary
                 )
             }
@@ -194,8 +185,8 @@ fun LoginScreen(
             Button(
                 onClick = {
                     viewModel.login {
-                        navController.navigate("home") {
-                            popUpTo("login") { inclusive = true }
+                        navController.navigate(Screens.Home.route) {
+                            popUpTo(Screens.Login.route) { inclusive = true }
                         }
                     }
                 },
@@ -209,7 +200,7 @@ fun LoginScreen(
                 )
             ) {
                 Text(
-                    text = "Log in",
+                    text = stringResource(R.string.log_in),
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -264,80 +255,3 @@ fun LoginScreen(
 }
 
 
-
-
-
-
-
-//
-//// LoginScreen.kt
-//@Composable
-//fun LoginScreen(
-//    viewModel: LoginScreenViewModel = LoginScreenViewModel(),
-//    navController: NavController
-//) {
-//    val context = LocalContext.current
-//    val state = viewModel.state.value
-//
-//    Column(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .padding(16.dp),
-//        verticalArrangement = Arrangement.Center,
-//        horizontalAlignment = Alignment.CenterHorizontally
-//    ) {
-//        Text(
-//            text = "Welcome Back!",
-//            style = MaterialTheme.typography.headlineMedium,
-//            modifier = Modifier.padding(bottom = 16.dp)
-//        )
-//        Text(
-//            text = "Log back into your account",
-//            style = MaterialTheme.typography.bodyLarge,
-//            modifier = Modifier.padding(bottom = 32.dp)
-//        )
-//
-//        OutlinedTextField(
-//            value = state.userId,
-//            onValueChange = { viewModel.onUserIdChange(it) },
-//            label = { Text("User ID") },
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-//        OutlinedTextField(
-//            value = state.password,
-//            onValueChange = { viewModel.onPasswordChange(it) },
-//            label = { Text("Password") },
-//            visualTransformation = PasswordVisualTransformation(),
-//            modifier = Modifier.fillMaxWidth()
-//        )
-//
-//        Spacer(modifier = Modifier.height(24.dp))
-//
-//        Button(
-//            onClick = {
-//                viewModel.login {
-//                    navController.navigate(Screens.Home.route) {
-//                        popUpTo(Screens.Login.route) { inclusive = true }
-//                    }
-//                }
-//            },
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text("Log in")
-//        }
-//
-//        if (state.isLoading) {
-//            CircularProgressIndicator(modifier = Modifier.padding(16.dp))
-//        }
-//
-//        state.error?.let { error ->
-//            Text(
-//                text = error,
-//                color = MaterialTheme.colorScheme.error,
-//                modifier = Modifier.padding(16.dp))
-//        }
-//    }
-//}

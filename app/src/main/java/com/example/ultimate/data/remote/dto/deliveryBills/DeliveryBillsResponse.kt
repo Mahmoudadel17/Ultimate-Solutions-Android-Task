@@ -2,16 +2,13 @@ package com.example.ultimate.data.remote.dto.deliveryBills
 
 import androidx.compose.ui.graphics.Color
 import com.example.ultimate.data.remote.dto.OperationResult
+import com.example.ultimate.ui.theme.p0
 import com.example.ultimate.ui.theme.p1
 import com.example.ultimate.ui.theme.p2
 import com.example.ultimate.ui.theme.p3
-import com.example.ultimate.ui.theme.p4
 import com.google.gson.annotations.SerializedName
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.format
-import kotlinx.datetime.format.DateTimeFormat
-import java.time.format.DateTimeFormatter
 import java.util.Locale
+import kotlin.math.round
 
 
 data class DeliveryBillsResponse(
@@ -77,10 +74,17 @@ data class DeliveryBill(
         ).filterNotNull().joinToString(", ")
 
     val totalAmount: Double
-        get() = (billAmount.toDoubleOrNull() ?: 0.0) +
+        get() = ((billAmount.toDoubleOrNull() ?: 0.0) +
                 (taxAmount.toDoubleOrNull() ?: 0.0) +
-                (deliveryAmount.toDoubleOrNull() ?: 0.0)
+                (deliveryAmount.toDoubleOrNull() ?: 0.0))
+            .roundTo(2) // Custom extension function
 
+    // Add this extension function
+    fun Double.roundTo(decimals: Int): Double {
+        var multiplier = 1.0
+        repeat(decimals) { multiplier *= 10 }
+        return round(this * multiplier) / multiplier
+    }
 
 
 }
@@ -88,10 +92,10 @@ data class DeliveryBill(
 
 fun DeliveryBill.getStatusColor(): Color {
     return when (deliveryStatusFlag) {
-        "0" -> p1 // Amber for pending
-        "1" -> p2 // Green for delivered
-        "2" -> p3// Yellow for partial return
-        "3" -> p4 // Red for full return
+        "0" -> p0
+        "1" -> p1
+        "2" -> p2
+        "3" -> p3
         else -> Color.Gray
     }
 }
