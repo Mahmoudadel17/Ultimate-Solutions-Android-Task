@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Onyx</string>
+    <string name="password">كلمة المرور</string>
+    <string name="user_id">معرف المستخدم</string>
+    <string name="arabic">العربية</string>
+    <string name="english">الإنجليزية</string>
+    <string name="apply">تطبيق</string>
+    <string name="new_tab">جديد</string>
+    <string name="others_tab">أخرى</string>
+    <string name="welcome_back">مرحباً بعودتك!</string>
+    <string name="log_back_into_your_account">سجل الدخول إلى حسابك</string>
+    <string name="show_more">عرض المزيد</string>
+    <string name="log_in">تسجيل الدخول</string>
+    <string name="orders_delivery">طلبات التوصيل</string>
+    <string name="delivery_person">موظف التوصيل</string>
+    <string name="no_orders_yet">لا توجد طلبات بعد</string>
+    <string name="you_don_t_have_any_orders_in_your_history">لا يوجد أي طلبات في سجلّك.</string>
+    <string name="error_loading_orders">خطأ في تحميل الطلبات</string>
+    <string name="arabic_ar">العربية</string>
+    <string name="choose_language">Choose Language</string>
+</resources>

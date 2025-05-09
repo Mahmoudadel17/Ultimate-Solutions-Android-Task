@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ultimate</string>
+    <string name="app_name">Onyx</string>
     <string name="password">Password</string>
     <string name="user_id">User ID</string>
     <string name="arabic">Arabic</string>
@@ -15,4 +15,7 @@
     <string name="delivery_person">Delivery Person</string>
     <string name="no_orders_yet">No orders yet</string>
     <string name="you_don_t_have_any_orders_in_your_history">You don\'t have any orders in your history.</string>
+    <string name="error_loading_orders">Error loading orders</string>
+    <string name="arabic_ar">العربية</string>
+    <string name="choose_language">Choose Language</string>
 </resources>

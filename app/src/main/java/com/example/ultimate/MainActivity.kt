@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.ultimate.presentation.auth.LoginScreenViewModel
+import com.example.ultimate.presentation.components.language.LanguageViewModel
 import com.example.ultimate.presentation.navigation.AppNavigation
 import com.example.ultimate.ui.theme.UltimateTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +25,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val viewModel: LanguageViewModel = hiltViewModel()
+            val context = LocalContext.current
+            val resources = context.resources
+
+            viewModel.applyLanguage(resources) {}
             UltimateTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(

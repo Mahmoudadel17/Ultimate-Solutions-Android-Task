@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -23,8 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ultimate.R
-
-
+import com.example.ultimate.utils.Constants
 
 
 @Composable
@@ -36,7 +37,7 @@ fun LanguageDialog(
 ) {
     AlertDialog(
         onDismissRequest = { onDismiss() },
-        title = { Text(text = "Choose Language", style = MaterialTheme.typography.titleMedium) },
+        title = { Text(text = stringResource(R.string.choose_language), style = MaterialTheme.typography.titleMedium) },
         text = {
             Row(
                 modifier = Modifier
@@ -45,24 +46,24 @@ fun LanguageDialog(
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
                 LanguageOption(
-                    languageCode = "ar",
-                    languageName = "العربية",
+                    languageTitle = stringResource(R.string.arabic),
+                    languageName = stringResource(R.string.arabic_ar),
                     flagEmoji = "\uD83C\uDDEA\uD83C\uDDEC", // Egypt flag 🇪🇬
-                    isSelected = selectedLanguage == "ar",
-                    onClick = { onLanguageSelected("1") }
+                    isSelected = selectedLanguage == Constants.LANGUAGE_AR_CODE,
+                    onClick = { onLanguageSelected(Constants.LANG_AR) }
                 )
                 LanguageOption(
-                    languageCode = "en",
-                    languageName = "English",
+                    languageTitle = stringResource(R.string.english),
+                    languageName = stringResource(R.string.english),
                     flagEmoji = "\uD83C\uDDEC\uD83C\uDDE7", // UK flag 🇬🇧
-                    isSelected = selectedLanguage == "en",
-                    onClick = { onLanguageSelected("2") }
+                    isSelected = selectedLanguage == Constants.LANGUAGE_EN_CODE,
+                    onClick = { onLanguageSelected(Constants.LANG_EN) }
                 )
             }
         },
         confirmButton = {
             Button(onClick = onApplyClick) {
-                Text("Apply")
+                Text(stringResource(R.string.apply))
             }
         }
     )
@@ -70,7 +71,7 @@ fun LanguageDialog(
 
 @Composable
 fun LanguageOption(
-    languageCode: String,
+    languageTitle: String,
     languageName: String,
     flagEmoji: String,
     isSelected: Boolean,
@@ -83,13 +84,20 @@ fun LanguageOption(
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
             .background(backgroundColor)
-            .border(2.dp, borderColor, RoundedCornerShape(12.dp))
+            .border(1.dp, borderColor, RoundedCornerShape(12.dp))
             .clickable { onClick() }
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Text(text = flagEmoji, fontSize = 24.sp)
-            Text(text = languageName, style = MaterialTheme.typography.bodyMedium)
+            Spacer(modifier = Modifier.width(5.dp))
+            Column {
+                Text(text = languageTitle, style = MaterialTheme.typography.bodyMedium)
+                Text(text = languageName, style = MaterialTheme.typography.bodySmall)
+
+            }
         }
     }
 }

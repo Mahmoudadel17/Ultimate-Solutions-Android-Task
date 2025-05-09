@@ -45,7 +45,7 @@ init {
 }
 
 
-    private fun refresh(){
+     fun refresh(){
         val language = getLanguage()
         loadStatusTypes(language)
         loadBills(

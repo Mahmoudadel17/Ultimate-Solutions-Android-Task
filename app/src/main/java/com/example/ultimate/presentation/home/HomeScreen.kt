@@ -79,25 +79,18 @@ fun HomeScreen(
             )
         }
 
-        val  lang = viewModel.getLanguage()
-        // Get the layout direction based on view model state to make change directly
-        val layoutDirection = if (lang == Constants.LANG_AR) LayoutDirection.Rtl else LayoutDirection.Ltr
 
-        // Set layout direction, all app screens inside CompositionLocalProvider
-        // to change it if language changed
-        CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
-            // Content based on state
-            when (billsState) {
-                is BillsState.Loading -> LoadingState()
-                is BillsState.Empty -> EmptyState()
-                is BillsState.Error -> ErrorState(billsState.message)
-                is BillsState.Success -> BillsList(
-                    bills = viewModel.getFilteredBills(),
-                    getStatusName = { viewModel.getStatusName(it) }
-                )
-            }
+
+        // Content based on state
+        when (billsState) {
+            is BillsState.Loading -> LoadingState()
+            is BillsState.Empty -> EmptyState()
+            is BillsState.Error -> ErrorState(billsState.message){viewModel.refresh()}
+            is BillsState.Success -> BillsList(
+                bills = viewModel.getFilteredBills(),
+                getStatusName = { viewModel.getStatusName(it) }
+            )
         }
-
 
     }
 }
@@ -192,10 +185,12 @@ private fun EmptyState() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Icon(
-            imageVector = Icons.Outlined.List,
-            contentDescription = "No orders",
-            modifier = Modifier.size(64.dp),
+        Image(
+            painter = painterResource(id = R.drawable.ic_emptyorder), // Add ic_circle.svg to your drawables
+            contentDescription = "empty circle decoration",
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .size(170.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -213,7 +208,10 @@ private fun EmptyState() {
 }
 
 @Composable
-private fun ErrorState(message: String) {
+private fun ErrorState(
+    message: String,
+    refresh:()->Unit
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -229,7 +227,7 @@ private fun ErrorState(message: String) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "Error loading orders",
+            text = stringResource(R.string.error_loading_orders),
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.error
         )
@@ -240,7 +238,7 @@ private fun ErrorState(message: String) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
-            //  viewModel.loadBills(viewModel.getDeliveryName())
+            refresh()
         }) {
             Text("Retry")
         }
