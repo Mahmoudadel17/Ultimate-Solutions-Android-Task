@@ -26,43 +26,43 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.ultimate.R
 import com.example.ultimate.data.remote.dto.deliveryBills.DeliveryBill
 import com.example.ultimate.data.remote.dto.deliveryBills.getStatusColor
 import com.example.ultimate.presentation.components.OrderTabs
 import com.example.ultimate.presentation.components.language.LanguagePickerIcon
+import com.example.ultimate.utils.Constants
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+fun HomeScreen(
+    viewModel: HomeViewModel,
+    navController: NavController
+
+) {
     val billsState = viewModel.billsState.value
     val selectedTab = viewModel.selectedTab.value
 
 
     Column(modifier = Modifier.fillMaxSize()) {
         // Header with user info
-        UserHeader(viewModel)
+        UserHeader(
+            viewModel,
+            navController
+        )
 
-        // Tab Row
-//        TabRow(selectedTabIndex = selectedTab) {
-//            Tab(
-//                selected = selectedTab == 0,
-//                onClick = { viewModel.selectTab(0) },
-//                text = { Text(stringResource(R.string.new_tab)) }
-//            )
-//            Tab(
-//                selected = selectedTab == 1,
-//                onClick = { viewModel.selectTab(1) },
-//                text = { Text(stringResource(R.string.others_tab)) }
-//            )
-//        }
 
         Row(
             modifier = Modifier
@@ -79,21 +79,35 @@ fun HomeScreen(viewModel: HomeViewModel) {
             )
         }
 
-        // Content based on state
-        when (billsState) {
-            is BillsState.Loading -> LoadingState()
-            is BillsState.Empty -> EmptyState()
-            is BillsState.Error -> ErrorState(billsState.message)
-            is BillsState.Success -> BillsList(
-                bills = viewModel.getFilteredBills(),
-                getStatusName = { viewModel.getStatusName(it) }
-            )
+        val  lang = viewModel.getLanguage()
+        // Get the layout direction based on view model state to make change directly
+        val layoutDirection = if (lang == Constants.LANG_AR) LayoutDirection.Rtl else LayoutDirection.Ltr
+
+        // Set layout direction, all app screens inside CompositionLocalProvider
+        // to change it if language changed
+        CompositionLocalProvider(LocalLayoutDirection provides layoutDirection) {
+            // Content based on state
+            when (billsState) {
+                is BillsState.Loading -> LoadingState()
+                is BillsState.Empty -> EmptyState()
+                is BillsState.Error -> ErrorState(billsState.message)
+                is BillsState.Success -> BillsList(
+                    bills = viewModel.getFilteredBills(),
+                    getStatusName = { viewModel.getStatusName(it) }
+                )
+            }
         }
+
+
     }
 }
 
 @Composable
-private fun UserHeader(viewModel: HomeViewModel) {
+private fun UserHeader(
+    viewModel: HomeViewModel,
+    navController: NavController
+
+) {
     val (firstName, lastName) = viewModel.getDeliveryNames()
 
 
@@ -109,7 +123,7 @@ private fun UserHeader(viewModel: HomeViewModel) {
     ) {
         Column {
             Text(
-                text = firstName.ifEmpty { "Delivery Person" },
+                text = firstName.ifEmpty { stringResource(R.string.delivery_person) },
                 style = MaterialTheme.typography.headlineLarge
             )
             Text(
@@ -134,13 +148,15 @@ private fun UserHeader(viewModel: HomeViewModel) {
             )
             LanguagePickerIcon(
                 modifier = Modifier
-                .padding(top = 50.dp, start = 100.dp)
+                    .padding(top = 50.dp, start = 100.dp)
                     .padding(start = 56.dp)
                     .clip(RoundedCornerShape(4.dp))
                     .background(Color.White)
                     .padding(2.dp)
                 ,
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.primary,
+                isHome = true,
+                navController = navController
             )
             // Background elements
             Image(
@@ -184,13 +200,13 @@ private fun EmptyState() {
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "No orders yet",
+            text = stringResource(R.string.no_orders_yet),
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "You don't have any orders in your history.",
+            text = stringResource(R.string.you_don_t_have_any_orders_in_your_history),
             style = MaterialTheme.typography.bodyMedium
         )
     }

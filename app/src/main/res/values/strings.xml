@@ -11,4 +11,8 @@
     <string name="log_back_into_your_account">Log back into your account</string>
     <string name="show_more">Show More</string>
     <string name="log_in">Log in</string>
+    <string name="orders_delivery">Orders Delivery</string>
+    <string name="delivery_person">Delivery Person</string>
+    <string name="no_orders_yet">No orders yet</string>
+    <string name="you_don_t_have_any_orders_in_your_history">You don\'t have any orders in your history.</string>
 </resources>

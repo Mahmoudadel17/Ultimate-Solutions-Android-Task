@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -14,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.ultimate.R
 import com.example.ultimate.presentation.components.LanguageDialog
 import com.example.ultimate.presentation.navigation.Screens
+import com.example.ultimate.utils.Constants
 
 @Composable
 fun LanguagePickerIcon(
@@ -24,6 +26,9 @@ fun LanguagePickerIcon(
 
 ) {
     val viewModel: LanguageViewModel = hiltViewModel()
+
+    val context = LocalContext.current
+    val resources = context.resources
 
     // Trigger dialog when user clicks on image
     Box {
@@ -39,9 +44,9 @@ fun LanguagePickerIcon(
 
         if (viewModel.isDialogVisible.value) {
             LanguageDialog(
-                selectedLanguage = if (viewModel.selectedLanguage.value == "1") "ar" else "en",
+                selectedLanguage = if (viewModel.selectedLanguage.value == Constants.LANG_AR) "ar" else "en",
                 onLanguageSelected = { viewModel.selectLanguage(it) },
-                onApplyClick = { viewModel.applyLanguage{
+                onApplyClick = { viewModel.applyLanguage(resources){
                   if (isHome){
                       navController.navigate(Screens.Home.route) {
                           popUpTo(Screens.Login.route) { inclusive = true }

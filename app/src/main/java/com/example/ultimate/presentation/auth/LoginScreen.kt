@@ -79,7 +79,7 @@ fun LoginScreen(
                 )
 
                 Text(
-                    text = "Orders Delivery",
+                    text = stringResource(R.string.orders_delivery),
                     style = MaterialTheme.typography.headlineLarge.copy(
                         fontSize = 12.sp
                     ),
@@ -253,5 +253,6 @@ fun LoginScreen(
         }
     }
 }
+
 
 

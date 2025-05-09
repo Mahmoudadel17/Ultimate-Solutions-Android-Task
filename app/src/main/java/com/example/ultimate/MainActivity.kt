@@ -13,8 +13,6 @@ import com.example.ultimate.presentation.auth.LoginScreenViewModel
 import com.example.ultimate.presentation.navigation.AppNavigation
 import com.example.ultimate.ui.theme.UltimateTheme
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -31,6 +29,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     AppNavigation(loginViewModel)
+
 
                 }
             }

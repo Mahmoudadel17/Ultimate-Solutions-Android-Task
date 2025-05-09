@@ -45,15 +45,19 @@ init {
 }
 
 
-    fun refresh(){
-        val language = pref.getSharedPreferences(Constants.LANG,"1")
+    private fun refresh(){
+        val language = getLanguage()
         loadStatusTypes(language)
         loadBills(
             deliveryNo = pref.getSharedPreferences(Constants.DELIVERY_NO,""),
-            languageNo =  pref.getSharedPreferences(Constants.LANG,"")
+            languageNo =  language
         )
     }
 
+    fun getLanguage():String{
+        return pref.getSharedPreferences(Constants.LANG,Constants.LANG_AR)
+
+    }
 
     fun selectTab(tabIndex: Int) {
         _selectedTab.value = tabIndex

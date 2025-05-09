@@ -34,6 +34,10 @@ class LoginScreenViewModel @Inject constructor(
         _state = _state.copy(password = password)
     }
 
+    private fun getLanguage():String{
+        return pref.getSharedPreferences(Constants.LANG,Constants.LANG_AR)
+
+    }
 
 
     fun login(onSuccess: () -> Unit) {
@@ -42,7 +46,7 @@ class LoginScreenViewModel @Inject constructor(
             //
             _state = _state.copy(isLoading = true, error = null)
             //
-            val language = pref.getSharedPreferences(Constants.LANG,"1")
+            val language = getLanguage()
 
             try {
 
@@ -62,8 +66,8 @@ class LoginScreenViewModel @Inject constructor(
                     pref.setSharedPreferences(Constants.DELIVERY_NO,_state.userId)
                     pref.setSharedPreferences(Constants.DELIVERY_NAME,response.data.deliveryName)
 
-                    // must be create toggle for language TODO
-                    pref.setSharedPreferences(Constants.LANG,"1")
+                    // must be create toggle for language
+                    //pref.setSharedPreferences(Constants.LANG,Constants.LANG_AR)
 
                     _state = _state.copy(
                         isLoading = false
