@@ -34,6 +34,11 @@ class LoginScreenViewModel @Inject constructor(
         _state = _state.copy(password = password)
     }
 
+    fun onShowPasswordChange() {
+        _state = _state.copy(isShowPassword = _state.isShowPassword.not())
+    }
+
+
     private fun getLanguage():String{
         return pref.getSharedPreferences(Constants.LANG,Constants.LANG_AR)
 

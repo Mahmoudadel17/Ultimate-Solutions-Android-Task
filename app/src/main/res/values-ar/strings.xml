@@ -3,8 +3,9 @@
     <string name="app_name">Onyx</string>
     <string name="password">كلمة المرور</string>
     <string name="user_id">معرف المستخدم</string>
-    <string name="arabic">العربية</string>
+    <string name="arabic">Arabic</string>
     <string name="english">الإنجليزية</string>
+    <string name="english_en">English</string>
     <string name="apply">تطبيق</string>
     <string name="new_tab">جديد</string>
     <string name="others_tab">أخرى</string>
@@ -18,12 +19,14 @@
     <string name="you_don_t_have_any_orders_in_your_history">لا يوجد أي طلبات في سجلّك.</string>
     <string name="error_loading_orders">خطأ في تحميل الطلبات</string>
     <string name="arabic_ar">العربية</string>
-    <string name="choose_language">Choose Language</string>
-    <string name="status">Status</string>
-    <string name="date">Date</string>
-    <string name="order">Order</string>
-    <string name="details">Details</string>
-    <string name="new_text">New</string>
-    <string name="unknown">Unknown</string>
-    <string name="total_price">Total price</string>
+    <string name="choose_language">اختر اللغة</string>
+    <string name="status">الحالة</string>
+    <string name="date">التاريخ</string>
+    <string name="order">تفاصيل
+        الطلب</string>
+    <string name="details"> </string>
+    <string name="new_text">جديد</string>
+    <string name="unknown">غير معروف</string>
+    <string name="total_price">السعر الإجمالي</string>
+    <string name="hide">أخفاء</string>
 </resources>

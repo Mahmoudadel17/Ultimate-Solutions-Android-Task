@@ -169,16 +169,17 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp),
+                showPassword = state.isShowPassword
             ) { viewModel.onPasswordChange(it) }
 
 
             // Show More option
             TextButton(
-                onClick = { /* Handle show more */ },
+                onClick = { viewModel.onShowPasswordChange() },
                 modifier = Modifier.align(Alignment.End)
             ) {
                 Text(
-                    text = stringResource(R.string.show_more),
+                    text = if(state.isShowPassword) stringResource(R.string.hide) else stringResource(R.string.show_more),
                     color = MaterialTheme.colorScheme.primary
                 )
             }

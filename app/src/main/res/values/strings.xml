@@ -4,6 +4,7 @@
     <string name="user_id">User ID</string>
     <string name="arabic">Arabic</string>
     <string name="english">English</string>
+    <string name="english_en">English</string>
     <string name="apply">Apply</string>
     <string name="new_tab">  New   </string>
     <string name="others_tab">Others</string>
@@ -25,4 +26,5 @@
     <string name="new_text">New</string>
     <string name="unknown">Unknown</string>
     <string name="total_price">Total price</string>
+    <string name="hide">Hide</string>
 </resources>

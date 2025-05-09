@@ -20,6 +20,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ultimate.R
@@ -58,6 +59,7 @@ fun PasswordEditText(
     password:String ,
     modifier: Modifier = Modifier,
     editTextHeight: Int = 60,
+    showPassword:Boolean,
     onValueChange:(String) -> Unit,
 ) {
     Column {
@@ -73,7 +75,7 @@ fun PasswordEditText(
 
                 },
             value = password,
-            visualTransformation = PasswordVisualTransformation() ,
+            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
             onValueChange = {
                 onValueChange(it)
             },

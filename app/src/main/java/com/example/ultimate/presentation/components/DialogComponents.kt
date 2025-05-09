@@ -53,7 +53,7 @@ fun LanguageDialog(
                     onClick = { onLanguageSelected(Constants.LANG_AR) }
                 )
                 LanguageOption(
-                    languageTitle = stringResource(R.string.english),
+                    languageTitle = stringResource(R.string.english_en),
                     languageName = stringResource(R.string.english),
                     flagEmoji = "\uD83C\uDDEC\uD83C\uDDE7", // UK flag 🇬🇧
                     isSelected = selectedLanguage == Constants.LANGUAGE_EN_CODE,
