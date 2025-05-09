@@ -12,6 +12,7 @@ import com.example.ultimate.data.repository.DeliveryBillsRepositoryImpl
 import com.example.ultimate.domain.repository.AuthRepository
 import com.example.ultimate.domain.repository.DeliveryBillsRepository
 import com.example.ultimate.utils.Constants
+import com.example.ultimate.utils.SessionManager
 import com.example.ultimate.utils.SharedPreferences
 import dagger.Module
 import dagger.Provides
@@ -80,5 +81,14 @@ object AppModule {
     fun provideSharedPreferencesInstance(application: Application): SharedPreferences {
         return SharedPreferences(application)
     }
+
+    @Provides
+    @Singleton
+    fun provideSessionManager(
+        pref: SharedPreferences
+    ): SessionManager {
+        return SessionManager(pref)
+    }
+
 
 }

@@ -106,9 +106,13 @@ fun LoginScreen(
                     modifier = Modifier
                         .size(150.dp)
                         .padding(top = 70.dp, start = 60.dp)
-                        .padding(start = 56.dp)
+                        .padding(start = 56.dp),
 
-                )
+                ){
+                    navController.navigate(Screens.Login.route) {
+                        popUpTo(Screens.Login.route) { inclusive = true }
+                    }
+                }
 
             }
 

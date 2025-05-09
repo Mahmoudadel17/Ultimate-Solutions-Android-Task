@@ -12,10 +12,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Error
 import androidx.compose.material.icons.outlined.List
@@ -44,6 +46,7 @@ import com.example.ultimate.data.remote.dto.deliveryBills.DeliveryBill
 import com.example.ultimate.data.remote.dto.deliveryBills.getStatusColor
 import com.example.ultimate.presentation.components.OrderTabs
 import com.example.ultimate.presentation.components.language.LanguagePickerIcon
+import com.example.ultimate.presentation.navigation.Screens
 import com.example.ultimate.utils.Constants
 
 @Composable
@@ -148,9 +151,12 @@ private fun UserHeader(
                     .padding(2.dp)
                 ,
                 color = MaterialTheme.colorScheme.primary,
-                isHome = true,
-                navController = navController
-            )
+
+            ){
+                navController.navigate(Screens.Home.route) {
+                    popUpTo(Screens.Login.route) { inclusive = true }
+                }
+            }
             // Background elements
             Image(
                 painter = painterResource(id = R.drawable.deliveryman), // Add delivery.svg to your drawables
@@ -290,38 +296,71 @@ private fun BillItem(
                 Text(
                     text = "#${bill.billSerial}",
                     style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSecondary,
                     fontWeight = FontWeight.Bold
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(30.dp)
+                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Column {
-                        Text("Status", style = MaterialTheme.typography.labelSmall)
+                        Text(
+                            stringResource(R.string.status),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSecondary
+                            )
                         Text(
                             text = getStatusName(bill.deliveryStatusFlag) ?:
-                            if (bill.deliveryStatusFlag == "0") "New" else "Unknown",
+                            if (bill.deliveryStatusFlag == "0") stringResource(R.string.new_text) else stringResource(
+                                R.string.unknown
+                            ),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold,
                             color = bill.getStatusColor()
                         )
                     }
-
+                    // Vertical Divider
+                    Divider(
+                        modifier = Modifier
+                            .height(36.dp)
+                            .width(1.dp)
+                            .background(Color.LightGray),
+                    )
                     Column {
-                        Text("Total price", style = MaterialTheme.typography.labelSmall)
+                        Text(
+                            stringResource(R.string.total_price),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSecondary,
+
+                            )
                         Text(
                             text = "${bill.totalAmount} LE",
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Bold
                         )
                     }
-
+                    // Vertical Divider
+                    Divider(
+                        modifier = Modifier
+                            .height(36.dp)
+                            .width(1.dp)
+                            .background(Color.LightGray),
+                    )
                     Column {
-                        Text("Date", style = MaterialTheme.typography.labelSmall)
+                        Text(
+                            stringResource(R.string.date),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSecondary,
+
+                            )
                         Text(
                             text = bill.billDate,
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Bold
                         )
                     }
 
@@ -344,12 +383,12 @@ private fun BillItem(
                 )
 
                 Text(
-                    text = "Order",
+                    text = stringResource(R.string.order),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onPrimary
                 )
                 Text(
-                    text = "Details",
+                    text = stringResource(R.string.details),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onPrimary
 

@@ -16,6 +16,11 @@ class SharedPreferences(context: Context) {
         editSharedPreferences = sharedPreferences.edit()
 
     }
+
+    fun clear(){
+        editSharedPreferences.clear().apply()
+    }
+
     fun setSharedPreferences(name:String, value:String): Boolean{
         return try {
             editSharedPreferences.putString(name,value)

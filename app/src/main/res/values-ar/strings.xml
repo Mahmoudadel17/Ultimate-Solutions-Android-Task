@@ -19,4 +19,11 @@
     <string name="error_loading_orders">خطأ في تحميل الطلبات</string>
     <string name="arabic_ar">العربية</string>
     <string name="choose_language">Choose Language</string>
+    <string name="status">Status</string>
+    <string name="date">Date</string>
+    <string name="order">Order</string>
+    <string name="details">Details</string>
+    <string name="new_text">New</string>
+    <string name="unknown">Unknown</string>
+    <string name="total_price">Total price</string>
 </resources>

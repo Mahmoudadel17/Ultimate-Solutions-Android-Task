@@ -1,6 +1,7 @@
 package com.example.ultimate
 
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -15,11 +16,15 @@ import com.example.ultimate.presentation.auth.LoginScreenViewModel
 import com.example.ultimate.presentation.components.language.LanguageViewModel
 import com.example.ultimate.presentation.navigation.AppNavigation
 import com.example.ultimate.ui.theme.UltimateTheme
+import com.example.ultimate.utils.SessionManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val loginViewModel by viewModels<LoginScreenViewModel>()
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +41,24 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppNavigation(loginViewModel)
+                    AppNavigation(
+                        loginViewModel,
+                        sessionManager
+                        )
 
 
                 }
             }
         }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        sessionManager.updateLastInteraction()
+        return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        sessionManager.updateLastInteraction()
     }
 }

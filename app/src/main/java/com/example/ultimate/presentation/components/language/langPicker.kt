@@ -21,9 +21,7 @@ import com.example.ultimate.utils.Constants
 fun LanguagePickerIcon(
     modifier: Modifier = Modifier,
     color: Color = Color.White,
-    isHome:Boolean = false,
-    navController: NavController = rememberNavController()
-
+    onApply:()->Unit
 ) {
     val viewModel: LanguageViewModel = hiltViewModel()
 
@@ -47,11 +45,7 @@ fun LanguagePickerIcon(
                 selectedLanguage = if (viewModel.selectedLanguage.value == Constants.LANG_AR) "ar" else "en",
                 onLanguageSelected = { viewModel.selectLanguage(it) },
                 onApplyClick = { viewModel.applyLanguage(resources){
-                  if (isHome){
-                      navController.navigate(Screens.Home.route) {
-                          popUpTo(Screens.Login.route) { inclusive = true }
-                      }
-                  }
+                     onApply()
                 } },
                 onDismiss = { viewModel.showDialog(false) }
             )

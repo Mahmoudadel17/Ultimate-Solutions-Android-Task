@@ -62,9 +62,14 @@ fun LanguageDialog(
             }
         },
         confirmButton = {
-            Button(onClick = onApplyClick) {
+            Button(
+                onClick = onApplyClick,
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
                 Text(stringResource(R.string.apply))
             }
+
         }
     )
 }

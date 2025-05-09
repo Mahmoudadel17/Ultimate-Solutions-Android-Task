@@ -6,6 +6,7 @@ object Constants {
     const val LANG = "language"
     const val DELIVERY_NO = "deliveryNo"
     const val DELIVERY_NAME = "deliveryName"
+    const val SESSION_TIME = "session_time"
     const val LANG_AR = "1"
     const val LANG_EN = "2"
     const val LANGUAGE_AR_CODE = "ar"

@@ -1,6 +1,7 @@
 package com.example.ultimate.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -10,10 +11,16 @@ import com.example.ultimate.presentation.auth.LoginScreenViewModel
 import com.example.ultimate.presentation.home.HomeScreen
 import com.example.ultimate.presentation.home.HomeViewModel
 import com.example.ultimate.presentation.splash.SplashScreen
+import com.example.ultimate.utils.SessionHandler
+import com.example.ultimate.utils.SessionManager
+import kotlinx.coroutines.delay
 
 
 @Composable
-fun AppNavigation(loginViewModel: LoginScreenViewModel) {
+fun AppNavigation(
+    loginViewModel: LoginScreenViewModel,
+    sessionManager: SessionManager
+) {
     val navController = rememberNavController()
 
     NavHost(
@@ -44,6 +51,16 @@ fun AppNavigation(loginViewModel: LoginScreenViewModel) {
         }
 
     }
+
+    // Check session periodically
+    LaunchedEffect(Unit) {
+        while (true) {
+            delay(30_000)
+            sessionManager.checkSession(navController)
+        }
+    }
+
+    SessionHandler(navController,sessionManager)
 
 }
 
